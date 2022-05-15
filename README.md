@@ -6,7 +6,7 @@ Tornado Cash Encrypted Note.Net: Cypher/Decypher
 This project is a C# implementation of [Tornado Cash](https://docs.tornado.cash/general/how-does-tornado.cash-work)'s encrypted notes.
 
 ## Introduction
-Tornado Cash notes encrypted with X25519-XSalsa20-Poly1305 algorithm.
+Tornado Cash notes encrypted with [X25519](https://en.wikipedia.org/wiki/Curve25519)-[XSalsa20](https://en.wikipedia.org/wiki/Salsa20)-[Poly1305](https://en.wikipedia.org/wiki/Poly1305) algorithm.
 Each note has structure:
 ```
 - Nonce. 24 bytes: disposable random 24 bytes
@@ -61,4 +61,5 @@ Decrypter.DecryptNote(encryptedNoteHex, "97a6f440ae04bd21dece386ed83ed65e7bc3405
 ## License
 Licensed under the Apache License
 
-[NaCL](https://github.com/somdoron/nacl.net)'s author: [Doron Somech](https://github.com/somdoron) & Daniel J. Bernstein
+- X25519-XSalsa20-Poly1305 algorithm: [Daniel J. Bernstein](https://en.wikipedia.org/wiki/Daniel_J._Bernstein)
+- [NaCL.Net](https://github.com/somdoron/nacl.net)'s author: [Doron Somech](https://github.com/somdoron)
