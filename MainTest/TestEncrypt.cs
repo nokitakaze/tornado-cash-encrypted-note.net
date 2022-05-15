@@ -122,11 +122,12 @@ namespace TornadoCashEncryptedNote.MainTest
             }
         }
 
+        private const string DefaultPlainNote =
+            "0x6Bf694a291DF3FeC1f7e69701E3ab6c592435Ae7-0x0e2d09c3b49548799444ae871c1ad7e6dd6110f80e6db8f8e544c33c45234f56caae9b5b4d4d24e1ffbc92b3f94a2228efa28efb363ed96275983a9c64a3";
+
         [Fact]
         public void EncryptShortKey1Test()
         {
-            const string rawNote =
-                "0x6Bf694a291DF3FeC1f7e69701E3ab6c592435Ae7-0x0e2d09c3b49548799444ae871c1ad7e6dd6110f80e6db8f8e544c33c45234f56caae9b5b4d4d24e1ffbc92b3f94a2228efa28efb363ed96275983a9c64a3";
             for (var i = 16; i < XSalsa20Poly1305.KeyLength - 1; i++)
             {
                 var bytesShort = new byte[i];
@@ -136,17 +137,15 @@ namespace TornadoCashEncryptedNote.MainTest
                 Array.Copy(bytesShort.Reverse().ToArray(), 0, fullKey, XSalsa20Poly1305.KeyLength - i, i);
                 var fullKeyS = "0x" + string.Concat(fullKey.Select(t => t.ToString("x2")));
 
-                var encrypted = Encrypter.EncryptNote(rawNote, fullKeyS);
+                var encrypted = Encrypter.EncryptNote(DefaultPlainNote, fullKeyS);
                 var decrypted = Decrypter.DecryptNote(encrypted, fullKeyS);
-                Assert.Equal(rawNote, decrypted);
+                Assert.Equal(DefaultPlainNote, decrypted);
             }
         }
 
         [Fact]
         public void EncryptShortKey2Test()
         {
-            const string rawNote =
-                "0x6Bf694a291DF3FeC1f7e69701E3ab6c592435Ae7-0x0e2d09c3b49548799444ae871c1ad7e6dd6110f80e6db8f8e544c33c45234f56caae9b5b4d4d24e1ffbc92b3f94a2228efa28efb363ed96275983a9c64a3";
             for (var i = 0; i < XSalsa20Poly1305.KeyLength + 10; i++)
             {
                 if (i == XSalsa20Poly1305.KeyLength)
@@ -161,7 +160,7 @@ namespace TornadoCashEncryptedNote.MainTest
 
                 try
                 {
-                    Encrypter.EncryptNote(rawNote, bytesShort);
+                    Encrypter.EncryptNote(DefaultPlainNote, bytesShort);
                     Assert.True(false, "Encrypted didn't raise exception with short note' private key");
                 }
                 catch (EncryptedNoteException)
@@ -170,7 +169,7 @@ namespace TornadoCashEncryptedNote.MainTest
 
                 try
                 {
-                    Encrypter.EncryptNote(rawNote, shortKeyS);
+                    Encrypter.EncryptNote(DefaultPlainNote, shortKeyS);
                     Assert.True(false, "Encrypted didn't raise exception with short note' private key");
                 }
                 catch (EncryptedNoteException)
@@ -205,6 +204,23 @@ namespace TornadoCashEncryptedNote.MainTest
             catch (EncryptedNoteException)
             {
             }
+        }
+
+        [Fact]
+        public void UniqueTest()
+        {
+            const int count = 10_000;
+            var values = new List<string>();
+            var key = new byte[XSalsa20Poly1305.KeyLength];
+            Rng.GetBytes(key);
+
+            for (var i = 0; i < count; i++)
+            {
+                var encrypted = Encrypter.EncryptNote(DefaultPlainNote, key);
+                values.Add(string.Concat(encrypted.Select(t => t.ToString("x2"))));
+            }
+
+            Assert.Equal(count, values.Distinct().Count());
         }
     }
 }

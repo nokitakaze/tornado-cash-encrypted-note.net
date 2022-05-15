@@ -77,7 +77,7 @@ namespace TornadoCashEncryptedNote
             var isVerified = boxPair.TryDecrypt(plain, encryptedBytesMessage, nonce);
             if (!isVerified)
             {
-                throw new EncryptedNoteException("Can't verify encrypted note");
+                throw new EncryptedNoteException("Can't decrypt the note");
             }
 
             var decrypted = Encoding.UTF8.GetString(plain);

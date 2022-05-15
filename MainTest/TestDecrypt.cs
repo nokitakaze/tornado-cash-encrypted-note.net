@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Security.Cryptography;
 using NaCl;
 using Xunit;
 
@@ -10,8 +9,6 @@ namespace TornadoCashEncryptedNote.MainTest
 {
     public class TestDecrypt
     {
-        private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
-
         public static IEnumerable<object[]> DecryptNoteTestData()
         {
             var messages = new[]
