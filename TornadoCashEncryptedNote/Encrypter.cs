@@ -28,13 +28,13 @@ namespace TornadoCashEncryptedNote
                 .ToArray();
         }
 
-        public static string CreateRawNoteFrom(string contractAddress, string privateCommitment)
+        public static string CreateRawNoteFrom(string contractAddress, string commitmentSecret)
         {
             contractAddress = AddressUtil.ConvertToChecksumAddress(contractAddress.ToLowerInvariant());
-            privateCommitment = privateCommitment.ToLowerInvariant();
-            if (!privateCommitment.StartsWith("0x"))
+            commitmentSecret = commitmentSecret.ToLowerInvariant();
+            if (!commitmentSecret.StartsWith("0x"))
             {
-                privateCommitment = "0x" + privateCommitment;
+                commitmentSecret = "0x" + commitmentSecret;
             }
 
             var contractAddressBytes = ParseHex(contractAddress);
@@ -43,13 +43,13 @@ namespace TornadoCashEncryptedNote
                 throw new EncryptedNoteException("Contract address malformed");
             }
 
-            var privateCommitmentBytes = ParseHex(privateCommitment);
-            if (privateCommitmentBytes.Length != 62)
+            var commitmentSecretBytes = ParseHex(commitmentSecret);
+            if (commitmentSecretBytes.Length != 62)
             {
                 throw new EncryptedNoteException("Commitment malformed");
             }
 
-            var note = $"{contractAddress}-{privateCommitment}";
+            var note = $"{contractAddress}-{commitmentSecret}";
             return note;
         }
 

@@ -5,6 +5,10 @@ Tornado Cash Encrypted Note.Net: Cypher/Decypher
 
 This project is a C# implementation of [Tornado Cash](https://docs.tornado.cash/general/how-does-tornado.cash-work)'s encrypted notes.
 
+### More about Tornado Cash
+- https://mirror.xyz/decent-dao.eth/zb1mwO0wjwv74AQvNNMvGEUFRBt7cVqyoIDrhvrwt0k
+- https://youtu.be/z_cRicXX1jI
+
 ## Introduction
 Tornado Cash notes encrypted with [X25519](https://en.wikipedia.org/wiki/Curve25519)-[XSalsa20](https://en.wikipedia.org/wiki/Salsa20)-[Poly1305](https://en.wikipedia.org/wiki/Poly1305) algorithm.
 Each note has structure:
@@ -15,7 +19,7 @@ Each note has structure:
 ```
 
 Plain text has structure:
-`{ContractAddress}-{PrivateCommitment}`
+`{ContractAddress}-{CommitmentSecret}`
 Examples:
 - `0x6Bf694a291DF3FeC1f7e69701E3ab6c592435Ae7-0x0e2d09c3b49548799444ae871c1ad7e6dd6110f80e6db8f8e544c33c45234f56caae9b5b4d4d24e1ffbc92b3f94a2228efa28efb363ed96275983a9c64a3`
 - `0x84443CFd09A48AF6eF360C6976C5392aC5023a1F-0x8449131cdfbdb26c5834930477fd26425b7d637148414dd0f74fce7feb9b1d9b130e0342dfd9249beaae603e3b07f98a66604029a32d21356c82f224a15f`
@@ -38,7 +42,7 @@ You could [check it](https://tornadocash.eth.limo/account/) on Goerli network. P
 
 ## Public Interface
 
-* **`Encrypter.CreateRawNoteFrom(string contractAddress, string privateCommitment)`** - Create plain non-crypted note
+* **`Encrypter.CreateRawNoteFrom(string contractAddress, string commitmentSecret)`** - Create plain non-crypted note
 * **`Encrypter.EncryptNote(string rawNote, string/byte[] notePrivateKey)`** - Encrypt plain note to Encrypted Note format
 * **`Decrypter.DecryptNote(string/byte[] encryptedNote, string/byte[] notePrivateKey)`** - Create plain non-crypted note
 
@@ -59,7 +63,9 @@ Decrypter.DecryptNote(encryptedNoteHex, "97a6f440ae04bd21dece386ed83ed65e7bc3405
 ```
 
 ## License
-Licensed under the Apache License
+Licensed under the Apache License.
+
+This software is provided **"AS IS" WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied**.
 
 - X25519-XSalsa20-Poly1305 algorithm: [Daniel J. Bernstein](https://en.wikipedia.org/wiki/Daniel_J._Bernstein)
 - [NaCL.Net](https://github.com/somdoron/nacl.net)'s author: [Doron Somech](https://github.com/somdoron)
