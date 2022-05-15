@@ -1,7 +1,7 @@
 Tornado Cash Encrypted Note.Net: Cypher/Decypher
 ===========
-[![Build status](https://ci.appveyor.com/api/projects/status/xxxxx/branch/master?svg=true)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note.net/branch/master)
-[![Test status](https://img.shields.io/appveyor/tests/nokitakaze/tornado-cash-encrypted-note.net)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note.net/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/buvwa4iu4ifo74a0/branch/master?svg=true)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note-net/branch/master)
+[![Test status](https://img.shields.io/appveyor/tests/nokitakaze/tornado-cash-encrypted-note-net)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note-net/branch/master)
 
 This project is a C# implementation of [Tornado Cash](https://docs.tornado.cash/general/how-does-tornado.cash-work)'s encrypted notes.
 
