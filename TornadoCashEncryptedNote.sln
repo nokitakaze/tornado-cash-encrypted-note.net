@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TornadoCashEncryptedNote", "TornadoCashEncryptedNote\TornadoCashEncryptedNote.csproj", "{C2777173-0D90-4D91-881E-FED0406274BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainTest", "MainTest\MainTest.csproj", "{D97C7CED-448D-4050-97C9-91E9D7EC4F49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2777173-0D90-4D91-881E-FED0406274BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2777173-0D90-4D91-881E-FED0406274BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2777173-0D90-4D91-881E-FED0406274BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2777173-0D90-4D91-881E-FED0406274BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D97C7CED-448D-4050-97C9-91E9D7EC4F49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D97C7CED-448D-4050-97C9-91E9D7EC4F49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D97C7CED-448D-4050-97C9-91E9D7EC4F49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D97C7CED-448D-4050-97C9-91E9D7EC4F49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="NaCl.Net" Version="0.1.13" />
+      <PackageReference Include="Nethereum.Util" Version="4.5.0" />
+    </ItemGroup>
+
+</Project>
