@@ -1,12 +1,14 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Text;
 using NaCl;
 
 namespace TornadoCashEncryptedNote
 {
-    public class Decrypter
+    public static class Decrypter
     {
-        public static byte[] ParseHex(string hex)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static byte[] ParseHex(string hex)
         {
             return Encrypter.ParseHex(hex);
         }

@@ -75,7 +75,7 @@ namespace TornadoCashEncryptedNote
             var encryptedNotePublicKey = new byte[XSalsa20Poly1305.KeyLength];
             Curve25519.ScalarMultiplicationBase(encryptedNotePublicKey, privateKey);
 
-            // Create ephemerical key pair
+            // Create ephemeral key pair
             Curve25519XSalsa20Poly1305.KeyPair(out var ephemSecretKey, out var ephemPublicKey);
 
             using var ephemBoxPair = new Curve25519XSalsa20Poly1305(ephemSecretKey, encryptedNotePublicKey);
