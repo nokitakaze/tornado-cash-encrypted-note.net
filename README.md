@@ -10,7 +10,7 @@ This project is a C# implementation of [Tornado Cash](https://docs.tornado.cash/
 - https://youtu.be/z_cRicXX1jI
 
 ## Introduction
-Tornado Cash notes encrypted with [X25519](https://en.wikipedia.org/wiki/Curve25519)-[XSalsa20](https://en.wikipedia.org/wiki/Salsa20)-[Poly1305](https://en.wikipedia.org/wiki/Poly1305) algorithm.
+Tornado Cash' notes encrypted with [X25519](https://en.wikipedia.org/wiki/Curve25519)-[XSalsa20](https://en.wikipedia.org/wiki/Salsa20)-[Poly1305](https://en.wikipedia.org/wiki/Poly1305) algorithm.
 Each note has structure:
 ```
 - Nonce. 24 bytes: disposable random 24 bytes
@@ -42,9 +42,9 @@ You could [check it](https://tornadocash.eth.limo/account/) on Goerli network. P
 
 ## Public Interface
 
-* **`Encrypter.CreateRawNoteFrom(string contractAddress, string commitmentSecret)`** - Create plain non-crypted note
-* **`Encrypter.EncryptNote(string rawNote, string/byte[] notePrivateKey)`** - Encrypt plain note to Encrypted Note format
-* **`Decrypter.DecryptNote(string/byte[] encryptedNote, string/byte[] notePrivateKey)`** - Create plain non-crypted note
+* **`Encrypter.CreateRawNoteFrom(string contractAddress, string commitmentSecret): string`** - Create plain non-crypted note
+* **`Encrypter.EncryptNote(string rawNote, string/byte[] notePrivateKey): byte[]`** - Encrypt plain note to Encrypted Note format
+* **`Decrypter.DecryptNote(string/byte[] encryptedNote, string/byte[] notePrivateKey): string`** - Create plain non-crypted note
 
 ### Example
 Encryption
@@ -56,7 +56,7 @@ var encryptedNoteHex = string.Concat(encryptedNote.Select(t => t.ToFormat("X2"))
 Console.WriteLine(encryptedNoteHex);
 ```
 
-Decryption:
+Decryption
 ```C#
 var encryptedNoteHex = "A27BC84471DD85324572916B32D9E53536C189764010D628DBE5623D805E948F312B192E47D6F0A5C84BF0C7EEB2612916AAF14936C55C579181590D4926B1FFFD37A803303E4147326E61A21BE899D57403B356DF165D84C4228E63627A531ECB4688ABD3BDA925C8FAA1C19369097501C157FBF996BDE8E4A34B1ED51C75BF25B03ED92C1B319118F046EBBA392024DE528922000D98A1BAD0EA08AADC5ED27CF47A595C151C8CC196B23814873F914EB2D466459459BCD18E5827E29BE9699DB7AFF9D5A51BDC8C405845E3611A44058F121F969DA2AC4A101D409D9F74BABA6AE964F5B67E6454E7DBD5791675F02E"
 Decrypter.DecryptNote(encryptedNoteHex, "97a6f440ae04bd21dece386ed83ed65e7bc3405c271e4226f64ed421c197addb");
