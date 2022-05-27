@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using NaCl;
 using Xunit;
 
-namespace TornadoCashEncryptedNote.MainTest
+namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
 {
     public class TestEncrypt
     {

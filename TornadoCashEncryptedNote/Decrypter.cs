@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using NaCl;
 
-namespace TornadoCashEncryptedNote
+namespace NokitaKaze.TornadoCashEncryptedNote
 {
     public static class Decrypter
     {

@@ -6,7 +6,7 @@ using System.Text;
 using NaCl;
 using Nethereum.Util;
 
-namespace TornadoCashEncryptedNote
+namespace NokitaKaze.TornadoCashEncryptedNote
 {
     public static class Encrypter
     {

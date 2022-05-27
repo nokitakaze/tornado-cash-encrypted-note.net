@@ -5,7 +5,7 @@ using System.Linq;
 using NaCl;
 using Xunit;
 
-namespace TornadoCashEncryptedNote.MainTest
+namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
 {
     public class TestDecrypt
     {

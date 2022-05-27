@@ -1,4 +1,4 @@
-﻿namespace TornadoCashEncryptedNote
+﻿namespace NokitaKaze.TornadoCashEncryptedNote
 {
     public class EncryptedNoteException : System.Exception
     {

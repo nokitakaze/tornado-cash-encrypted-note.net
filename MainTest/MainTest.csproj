@@ -4,9 +4,9 @@
 
         <IsPackable>false</IsPackable>
 
-        <AssemblyName>TornadoCashEncryptedNote.MainTest</AssemblyName>
+        <AssemblyName>NokitaKaze.TornadoCashEncryptedNote.MainTest</AssemblyName>
 
-        <RootNamespace>TornadoCashEncryptedNote.MainTest</RootNamespace>
+        <RootNamespace>NokitaKaze.TornadoCashEncryptedNote.MainTest</RootNamespace>
 
         <TargetFrameworks>net5.0;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
