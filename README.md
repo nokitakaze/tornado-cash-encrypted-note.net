@@ -1,7 +1,7 @@
 Tornado Cash Encrypted Note.Net: Cypher/Decypher
 ===========
 [![Build status](https://ci.appveyor.com/api/projects/status/buvwa4iu4ifo74a0/branch/master?svg=true)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note-net/branch/master)
-[![Test status](https://img.shields.io/appveyor/tests/nokitakaze/tornado-cash-encrypted-note-net)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note-net/branch/master)
+[![Test status](https://img.shields.io/appveyor/tests/nokitakaze/tornado-cash-encrypted-note-net/master)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note-net/branch/master)
 [![codecov](https://codecov.io/gh/nokitakaze/tornado-cash-encrypted-note.net/branch/master/graph/badge.svg)](https://codecov.io/gh/nokitakaze/tornado-cash-encrypted-note.net)
 [![Total nuget downloads](https://badgen.net/nuget/dt/NokitaKaze.TornadoCashEncryptedNote)](https://www.nuget.org/packages/NokitaKaze.TornadoCashEncryptedNote)
 
@@ -66,9 +66,9 @@ Decrypter.DecryptNote(encryptedNoteHex, "97a6f440ae04bd21dece386ed83ed65e7bc3405
 
 ### Collisions / Format private keys
 It's not obvious, but some area of private keys has been punched out of Curve25519.
-When receiving such an array, implementations of X25519 (but not X448) MUST mask the most significant bit in the final byte. This is done to preserve compatibility with point formats that reserve the sign bit for use in other protocols and to increase resistance to implementation fingerprinting.
+When receiving such an array, implementations of X25519 (but not X448) MUST mask the most significant bit in the final byte. This is done to preserve compatibility with point formats that **reserve the sign** bit for use in other protocols and to increase resistance to implementation fingerprinting.
 
-There are still 2^252 bits for private keys, and you could use
+There are still 2^252 bits for private keys. You could use this code to get sanified/formatted/main version of secret key.
 ```C#
 privateKey = Curve25519Formatter.FormatPrivateKey(privateKey);
 var collisions = GetAllCollisionPrivateKeys(privateKey);
