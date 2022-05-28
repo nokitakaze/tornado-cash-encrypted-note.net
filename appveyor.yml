@@ -5,8 +5,11 @@ configuration:
 
 before_build:
   - dotnet restore
+  - choco install opencover.portable
+  - choco install codecov
 
-test:
-  assemblies:
-    only:
-      - '**\*.Test.dll'
+test_script:
+  - OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:test -filter:"+[NokitaKaze.TornadoCashEncryptedNote*]* -[*.MainTest]*" -output:".\MyProject_coverage.xml" -oldstyle
+
+after_test:
+  - codecov -f "MyProject_coverage.xml"
