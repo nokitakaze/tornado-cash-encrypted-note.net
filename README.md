@@ -63,6 +63,20 @@ var encryptedNoteHex = "A27BC84471DD85324572916B32D9E53536C189764010D628DBE5623D
 Decrypter.DecryptNote(encryptedNoteHex, "97a6f440ae04bd21dece386ed83ed65e7bc3405c271e4226f64ed421c197addb");
 ```
 
+### Collisions / Format private keys
+It's not obvious, but some area of private keys has been punched out of Curve25519.
+When receiving such an array, implementations of X25519 (but not X448) MUST mask the most significant bit in the final byte. This is done to preserve compatibility with point formats that reserve the sign bit for use in other protocols and to increase resistance to implementation fingerprinting.
+
+There are still 2^252 bits for private keys, and you could use
+```C#
+privateKey = Curve25519Formatter.FormatPrivateKey(privateKey);
+var collisions = GetAllCollisionPrivateKeys(privateKey);
+```
+
+Learn more:
+- https://crypto.stackexchange.com/questions/53318/can-you-help-me-understand-multiplication-of-points-when-using-curve25519
+- https://datatracker.ietf.org/doc/html/rfc7748#section-5
+
 ## License
 Licensed under the Apache License.
 
