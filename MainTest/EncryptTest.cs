@@ -7,7 +7,7 @@ using Xunit;
 
 namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
 {
-    public class TestEncrypt
+    public class EncryptTest
     {
         private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
 

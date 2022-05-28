@@ -8,9 +8,9 @@ namespace NokitaKaze.TornadoCashEncryptedNote
     public static class Decrypter
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static byte[] ParseHex(string hex)
+        private static byte[] ParseHex(string hexString)
         {
-            return Encrypter.ParseHex(hex);
+            return Curve25519Formatter.ParseHex(hexString);
         }
 
         public static string DecryptNote(string encryptedNote, string privateKey)

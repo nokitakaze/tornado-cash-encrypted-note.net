@@ -1,6 +1,5 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
+﻿using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using NaCl;
@@ -12,31 +11,10 @@ namespace NokitaKaze.TornadoCashEncryptedNote
     {
         private static readonly AddressUtil AddressUtil = new AddressUtil();
 
-        static Encrypter()
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static byte[] ParseHex(string hex)
         {
-#pragma warning disable CS0162
-            // Just in case
-            if (XSalsa20Poly1305.KeyLength != Curve25519.ScalarLength)
-            {
-                throw new Exception("Malformed constants");
-            }
-#pragma warning restore CS0162
-        }
-
-        public static byte[] ParseHex(string hex)
-        {
-            var s = hex;
-            if (s.StartsWith("0x"))
-            {
-                s = s[2..];
-            }
-
-            var n = (int)(2 * Math.Ceiling(s.Length * 0.5));
-            s = s.PadLeft(n, '0');
-            return Enumerable
-                .Range(0, n / 2)
-                .Select(t => byte.Parse(s.Substring(t * 2, 2), NumberStyles.HexNumber))
-                .ToArray();
+            return Curve25519Formatter.ParseHex(hex);
         }
 
         public static string CreateRawNoteFrom(string contractAddress, string commitmentSecret)

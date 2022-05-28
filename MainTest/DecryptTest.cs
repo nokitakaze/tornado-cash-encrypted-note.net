@@ -3,19 +3,11 @@ using System.Globalization;
 using System.Linq;
 using NaCl;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
 {
-    public class TestDecrypt
+    public class DecryptTest
     {
-        private readonly ITestOutputHelper _testOutputHelper;
-
-        public TestDecrypt(ITestOutputHelper testOutputHelper)
-        {
-            _testOutputHelper = testOutputHelper;
-        }
-
         public static IEnumerable<object[]> DecryptNoteTestData()
         {
             var messages = new[]
@@ -130,9 +122,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
             string privateKey
         )
         {
-            var privateKeyBytes = Encrypter.ParseHex(privateKey);
-            var collisionErrorIndexes = new List<int>();
-            var testCount = 0;
+            var privateKeyBytes = Curve25519Formatter.FormatPrivateKey(privateKey);
 
             for (var index = 0; index < privateKeyBytes.Length; index++)
             {
@@ -143,40 +133,24 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
                         continue;
                     }
 
-                    testCount++;
                     var privateKeyBytes1 = privateKeyBytes.ToArray();
                     privateKeyBytes1[index] = (byte)newValue;
+                    privateKeyBytes1 = Curve25519Formatter.FormatPrivateKey(privateKeyBytes1);
+                    if (Curve25519Formatter.ArePrivateKeysEqual(privateKeyBytes, privateKeyBytes1))
+                    {
+                        // Even if they are not the same, after formatting they are equal
+                        continue;
+                    }
 
                     try
                     {
-                        var decryptedNote = Decrypter.DecryptNote(encryptedNote, privateKeyBytes1);
-                        if ((index != 0) && (index != privateKeyBytes.Length - 1))
-                        {
-                            Assert.True(false, "Decryption didn't raise exception with wrong password");
-                            return; // hint: this line exists only for IDE
-                        }
-
-                        // That... was... unexpected...
-                        if (realRawNote != decryptedNote)
-                        {
-                            Assert.True(false,
-                                "Decryption with wrong password brings us wrong note. Note: " + decryptedNote);
-                            return; // hint: this line exists only for IDE
-                        }
-
-                        collisionErrorIndexes.Add(index);
+                        Decrypter.DecryptNote(encryptedNote, privateKeyBytes1);
+                        Assert.True(false, "Decryption didn't raise exception with wrong password");
                     }
                     catch (EncryptedNoteException)
                     {
                     }
                 }
-            }
-
-            _testOutputHelper.WriteLine("Key {0} has at least {1} collisions",
-                privateKey, collisionErrorIndexes.Count);
-            if (collisionErrorIndexes.Count >= testCount * 0.01)
-            {
-                Assert.True(false, "Decryption didn't raise exception with wrong password too many times");
             }
         }
 
