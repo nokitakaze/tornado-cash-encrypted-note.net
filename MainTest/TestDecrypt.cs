@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using NaCl;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
 {
     public class TestDecrypt
     {
+        private readonly ITestOutputHelper _testOutputHelper;
+
+        public TestDecrypt(ITestOutputHelper testOutputHelper)
+        {
+            _testOutputHelper = testOutputHelper;
+        }
+
         public static IEnumerable<object[]> DecryptNoteTestData()
         {
             var messages = new[]
@@ -118,30 +125,58 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
         public void DecryptNoteWithBrokenPasswordTest(
             string encryptedNote,
 #pragma warning disable xUnit1026
-            string _,
+            string realRawNote,
 #pragma warning restore xUnit1026
             string privateKey
         )
         {
-            var rnd = new Random();
             var privateKeyBytes = Encrypter.ParseHex(privateKey);
-            for (var i = 0; i < 10; i++)
-            {
-                var index = rnd.Next(0, privateKeyBytes.Length);
-                var privateKeyBytes1 = privateKeyBytes.ToArray();
-                while (privateKeyBytes1[index] == privateKeyBytes[index])
-                {
-                    privateKeyBytes1[index] = (byte)rnd.Next(0, 256);
-                }
+            var collisionErrorIndexes = new List<int>();
+            var testCount = 0;
 
-                try
+            for (var index = 0; index < privateKeyBytes.Length; index++)
+            {
+                for (int newValue = 0; newValue <= 0xFF; newValue++)
                 {
-                    Decrypter.DecryptNote(encryptedNote, privateKeyBytes1);
-                    Assert.True(false, "Decrypted didn't raise exception with wrong password");
+                    if (newValue == privateKeyBytes[index])
+                    {
+                        continue;
+                    }
+
+                    testCount++;
+                    var privateKeyBytes1 = privateKeyBytes.ToArray();
+                    privateKeyBytes1[index] = (byte)newValue;
+
+                    try
+                    {
+                        var decryptedNote = Decrypter.DecryptNote(encryptedNote, privateKeyBytes1);
+                        if ((index != 0) && (index != privateKeyBytes.Length - 1))
+                        {
+                            Assert.True(false, "Decryption didn't raise exception with wrong password");
+                            return; // hint: this line exists only for IDE
+                        }
+
+                        // That... was... unexpected...
+                        if (realRawNote != decryptedNote)
+                        {
+                            Assert.True(false,
+                                "Decryption with wrong password brings us wrong note. Note: " + decryptedNote);
+                            return; // hint: this line exists only for IDE
+                        }
+
+                        collisionErrorIndexes.Add(index);
+                    }
+                    catch (EncryptedNoteException)
+                    {
+                    }
                 }
-                catch (EncryptedNoteException)
-                {
-                }
+            }
+
+            _testOutputHelper.WriteLine("Key {0} has at least {1} collisions",
+                privateKey, collisionErrorIndexes.Count);
+            if (collisionErrorIndexes.Count >= testCount * 0.01)
+            {
+                Assert.True(false, "Decryption didn't raise exception with wrong password too many times");
             }
         }
 
@@ -164,7 +199,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
                 try
                 {
                     Decrypter.DecryptNote(s, privateKey);
-                    Assert.True(false, "Decrypted didn't raise exception with short malformed note");
+                    Assert.True(false, "Decryption didn't raise exception with short malformed note");
                 }
                 catch (EncryptedNoteException)
                 {
