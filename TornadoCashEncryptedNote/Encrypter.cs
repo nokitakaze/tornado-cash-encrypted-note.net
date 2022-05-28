@@ -12,6 +12,17 @@ namespace NokitaKaze.TornadoCashEncryptedNote
     {
         private static readonly AddressUtil AddressUtil = new AddressUtil();
 
+        static Encrypter()
+        {
+#pragma warning disable CS0162
+            // Just in case
+            if (XSalsa20Poly1305.KeyLength != Curve25519.ScalarLength)
+            {
+                throw new Exception("Malformed constants");
+            }
+#pragma warning restore CS0162
+        }
+
         public static byte[] ParseHex(string hex)
         {
             var s = hex;
