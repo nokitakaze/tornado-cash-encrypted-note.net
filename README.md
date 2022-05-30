@@ -44,9 +44,9 @@ You could [check it](https://tornadocash.eth.limo/account/) on Goerli network. P
 
 ## Public Interface
 
-* **`Encrypter.CreateRawNoteFrom(string contractAddress, string commitmentSecret): string`** - Create plain non-crypted note
-* **`Encrypter.EncryptNote(string rawNote, string/byte[] notePrivateKey): byte[]`** - Encrypt plain note to Encrypted Note format
-* **`Decrypter.DecryptNote(string/byte[] encryptedNote, string/byte[] notePrivateKey): string`** - Create plain non-crypted note
+* **`Encrypter.CreateRawNoteFrom(string contractAddress, string commitmentSecret): string`** — Create plain non-crypted note
+* **`Encrypter.EncryptNote(string rawNote, string/byte[] notePrivateKey): byte[]`** — Encrypt plain note to Encrypted Note format
+* **`Decrypter.DecryptNote(string/byte[] encryptedNote, string/byte[] notePrivateKey): string`** — Create plain non-crypted note
 
 ### Example
 Encryption
@@ -60,8 +60,8 @@ Console.WriteLine(encryptedNoteHex);
 
 Decryption
 ```C#
-var encryptedNoteHex = "A27BC84471DD85324572916B32D9E53536C189764010D628DBE5623D805E948F312B192E47D6F0A5C84BF0C7EEB2612916AAF14936C55C579181590D4926B1FFFD37A803303E4147326E61A21BE899D57403B356DF165D84C4228E63627A531ECB4688ABD3BDA925C8FAA1C19369097501C157FBF996BDE8E4A34B1ED51C75BF25B03ED92C1B319118F046EBBA392024DE528922000D98A1BAD0EA08AADC5ED27CF47A595C151C8CC196B23814873F914EB2D466459459BCD18E5827E29BE9699DB7AFF9D5A51BDC8C405845E3611A44058F121F969DA2AC4A101D409D9F74BABA6AE964F5B67E6454E7DBD5791675F02E"
-Decrypter.DecryptNote(encryptedNoteHex, "97a6f440ae04bd21dece386ed83ed65e7bc3405c271e4226f64ed421c197addb");
+var encryptedNoteHex = "A27BC84471DD85324572916B32D9E53536C189764010D628DBE5623D805E948F312B192E47D6F0A5C84BF0C7EEB2612916AAF14936C55C579181590D4926B1FFFD37A803303E4147326E61A21BE899D57403B356DF165D84C4228E63627A531ECB4688ABD3BDA925C8FAA1C19369097501C157FBF996BDE8E4A34B1ED51C75BF25B03ED92C1B319118F046EBBA392024DE528922000D98A1BAD0EA08AADC5ED27CF47A595C151C8CC196B23814873F914EB2D466459459BCD18E5827E29BE9699DB7AFF9D5A51BDC8C405845E3611A44058F121F969DA2AC4A101D409D9F74BABA6AE964F5B67E6454E7DBD5791675F02E";
+var decryptedNote = Decrypter.DecryptNote(encryptedNoteHex, "97a6f440ae04bd21dece386ed83ed65e7bc3405c271e4226f64ed421c197addb");
 ```
 
 ### Collisions / Format private keys
@@ -71,7 +71,7 @@ When receiving such an array, implementations of X25519 (but not X448) MUST mask
 There are still 2^252 bits for private keys. You could use this code to get sanified/formatted/main version of secret key.
 ```C#
 privateKey = Curve25519Formatter.FormatPrivateKey(privateKey);
-var collisions = GetAllCollisionPrivateKeys(privateKey);
+byte[][] collisions = GetAllCollisionPrivateKeys(privateKey);
 ```
 
 Learn more:
