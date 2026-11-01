@@ -59,27 +59,23 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
             }
         }
 
-        [Fact]
-        public void CheckMalformedAddresses()
+        [Theory]
+        [InlineData("0x4838B1O6FCe9647Bdf1E7877BF73cE8B0BAD5f97")]
+        [InlineData("Ox4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97")]
+        [InlineData("0x838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97")]
+        [InlineData("0x04838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97")]
+        [InlineData("0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f970")]
+        [InlineData("0xaa'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [InlineData("0xaa:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [InlineData("0xaa@aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [InlineData("0xaa`aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [InlineData("0xaa~aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [InlineData("0xaa[a]aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")]
+        [InlineData("0x````````````````````````````````````````")]
+        public void CheckMalformedAddresses(string address)
         {
             var exception = Assert.Throws<EncryptedNoteException>(() =>
-                EthereumAddressFormatter.Format("0x4838B1O6FCe9647Bdf1E7877BF73cE8B0BAD5f97"));
-            Assert.Equal("Contract address malformed", exception.Message);
-
-            exception = Assert.Throws<EncryptedNoteException>(() =>
-                EthereumAddressFormatter.Format("Ox4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"));
-            Assert.Equal("Contract address malformed", exception.Message);
-
-            exception = Assert.Throws<EncryptedNoteException>(() =>
-                EthereumAddressFormatter.Format("0x838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"));
-            Assert.Equal("Contract address malformed", exception.Message);
-
-            exception = Assert.Throws<EncryptedNoteException>(() =>
-                EthereumAddressFormatter.Format("0x04838B106FCe9647Bdf1E7877BF73cE8B0BAD5f97"));
-            Assert.Equal("Contract address malformed", exception.Message);
-
-            exception = Assert.Throws<EncryptedNoteException>(() =>
-                EthereumAddressFormatter.Format("0x4838B106FCe9647Bdf1E7877BF73cE8B0BAD5f970"));
+                EthereumAddressFormatter.Format(address));
             Assert.Equal("Contract address malformed", exception.Message);
         }
     }

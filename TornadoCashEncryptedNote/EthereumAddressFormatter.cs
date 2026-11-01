@@ -47,7 +47,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote
             {
                 var c = lower[i];
                 var nibble = (hash[i >> 1] >> ((i & 1) == 0 ? 4 : 0)) & 0xF;
-                if (c is >= 'a' and <= 'f' && nibble >= 8)
+                if (c >= 'a' && nibble >= 8)
                 {
                     c = char.ToUpperInvariant(c);
                 }
