@@ -6,6 +6,14 @@ using NaCl;
 
 namespace NokitaKaze.TornadoCashEncryptedNote
 {
+    /// <summary>
+    /// Builds a deposit note and seals it with X25519 and XSalsa20-Poly1305.
+    /// </summary>
+    /// <remarks>
+    /// An encrypted note is a 24-byte XSalsa20 nonce, the 32-byte ephemeral X25519 public key,
+    /// and the Poly1305-authenticated ciphertext.
+    /// The private key is the 32-byte X25519 key the note is encrypted to.
+    /// </remarks>
     public static class Encrypter
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -14,6 +22,27 @@ namespace NokitaKaze.TornadoCashEncryptedNote
             return Curve25519Formatter.ParseHex(hex);
         }
 
+        /// <summary>
+        /// Builds the plaintext deposit note from a contract address and a commitment secret.
+        /// </summary>
+        /// <param name="contractAddress">
+        /// A 20-byte contract address as 40 hex characters, with or without a <c>0x</c> prefix.
+        /// Letter case is ignored. The address is written with the checksum from
+        /// <see cref="EthereumAddressFormatter.Format(string)"/>.
+        /// </param>
+        /// <param name="commitmentSecret">
+        /// A 62-byte secret as hexadecimal text, with or without a <c>0x</c> prefix. Letter case is ignored.
+        /// </param>
+        /// <returns>
+        /// The checksum address, a hyphen, and <paramref name="commitmentSecret"/> as lowercase hex with a <c>0x</c> prefix.
+        /// </returns>
+        /// <exception cref="EncryptedNoteException">
+        /// <paramref name="contractAddress"/> is not 40 hexadecimal characters,
+        /// or <paramref name="commitmentSecret"/> is not 62 bytes.
+        /// </exception>
+        /// <exception cref="System.FormatException">
+        /// <paramref name="commitmentSecret"/> contains a non-hexadecimal character.
+        /// </exception>
         public static string CreateRawNoteFrom(string contractAddress, string commitmentSecret)
         {
             contractAddress = EthereumAddressFormatter.Format(contractAddress);
@@ -33,6 +62,24 @@ namespace NokitaKaze.TornadoCashEncryptedNote
             return note;
         }
 
+        /// <summary>
+        /// Encrypts a note for an X25519 private key.
+        /// </summary>
+        /// <param name="rawNote">
+        /// The plaintext note, encoded as UTF-8. This is typically the value returned by <see cref="CreateRawNoteFrom"/>.
+        /// </param>
+        /// <param name="privateKey">
+        /// The 32-byte note private key as hexadecimal text, with or without a <c>0x</c> prefix.
+        /// </param>
+        /// <returns>
+        /// The encrypted note. See <see cref="EncryptNote(string, byte[])"/> for the byte layout.
+        /// </returns>
+        /// <exception cref="System.FormatException">
+        /// <paramref name="privateKey"/> contains a non-hexadecimal character.
+        /// </exception>
+        /// <exception cref="EncryptedNoteException">
+        /// <paramref name="privateKey"/> is not 32 bytes, or the ciphertext does not decrypt with that key.
+        /// </exception>
         public static byte[] EncryptNote(string rawNote, string privateKey)
         {
             var bytes = ParseHex(privateKey);
@@ -45,6 +92,21 @@ namespace NokitaKaze.TornadoCashEncryptedNote
             return EncryptNote(rawNote, bytes);
         }
 
+        /// <summary>
+        /// Encrypts a note for an X25519 private key.
+        /// </summary>
+        /// <param name="rawNote">
+        /// The plaintext note, encoded as UTF-8. This is typically the value returned by <see cref="CreateRawNoteFrom"/>.
+        /// </param>
+        /// <param name="privateKey">The 32-byte X25519 private key the note is encrypted to.</param>
+        /// <returns>
+        /// A new encrypted note. Each call uses a fresh nonce and ephemeral key, so the same inputs produce different bytes.
+        /// The layout is a 24-byte XSalsa20 nonce, the 32-byte ephemeral X25519 public key,
+        /// and the XSalsa20-Poly1305 ciphertext, which <see cref="Decrypter.DecryptNoteToBytes"/> accepts.
+        /// </returns>
+        /// <exception cref="EncryptedNoteException">
+        /// <paramref name="privateKey"/> is not 32 bytes, or the ciphertext does not decrypt with that key.
+        /// </exception>
         public static byte[] EncryptNote(string rawNote, byte[] privateKey)
         {
             if (privateKey.Length != XSalsa20Poly1305.KeyLength)
