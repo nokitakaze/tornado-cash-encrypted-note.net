@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v7
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          global-json-file: global.json
+
+      - name: Restore dependencies
+        run: dotnet restore TornadoCashEncryptedNote.sln
+
+      - name: Build
+        run: dotnet build TornadoCashEncryptedNote.sln --configuration Release --no-restore
+
+      - name: Test with coverage
+        run: >
+          dotnet test TornadoCashEncryptedNote.sln
+          --configuration Release
+          --no-build
+          --collect:"XPlat Code Coverage"
+          --results-directory TestResults
+          --
+          DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=cobertura
+          "DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Exclude=[NokitaKaze.TornadoCashEncryptedNote.MainTest]*"
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          use_oidc: true
+          directory: TestResults
+          fail_ci_if_error: true

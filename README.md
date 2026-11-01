@@ -1,7 +1,6 @@
 Tornado Cash Encrypted Note.Net: Cypher/Decypher
 ===========
-[![Build status](https://ci.appveyor.com/api/projects/status/buvwa4iu4ifo74a0/branch/master?svg=true)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note-net/branch/master)
-[![Test status](https://img.shields.io/appveyor/tests/nokitakaze/tornado-cash-encrypted-note-net/master)](https://ci.appveyor.com/project/nokitakaze/tornado-cash-encrypted-note-net/branch/master)
+[![CI](https://github.com/nokitakaze/tornado-cash-encrypted-note.net/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/nokitakaze/tornado-cash-encrypted-note.net/actions/workflows/ci.yml)
 [![codecov](https://codecov.io/gh/nokitakaze/tornado-cash-encrypted-note.net/branch/master/graph/badge.svg)](https://codecov.io/gh/nokitakaze/tornado-cash-encrypted-note.net)
 [![Total nuget downloads](https://badgen.net/nuget/dt/NokitaKaze.TornadoCashEncryptedNote)](https://www.nuget.org/packages/NokitaKaze.TornadoCashEncryptedNote)
 
