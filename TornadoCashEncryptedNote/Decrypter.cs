@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using NaCl;
 
@@ -36,6 +37,15 @@ namespace NokitaKaze.TornadoCashEncryptedNote
         }
 
         public static string DecryptNote(byte[] encryptedNoteBytes, byte[] privateKeyBytes)
+        {
+            var bytes = DecryptNoteToBytes(encryptedNoteBytes, privateKeyBytes);
+            var decrypted = Encoding.UTF8.GetString(bytes);
+            CryptographicOperations.ZeroMemory(bytes);
+
+            return decrypted;
+        }
+
+        public static byte[] DecryptNoteToBytes(byte[] encryptedNoteBytes, byte[] privateKeyBytes)
         {
             if (privateKeyBytes.Length != XSalsa20Poly1305.KeyLength)
             {
@@ -80,13 +90,13 @@ namespace NokitaKaze.TornadoCashEncryptedNote
 
             var plain = new byte[encryptedBytesMessage.Length - XSalsa20Poly1305.TagLength];
             var isVerified = boxPair.TryDecrypt(plain, encryptedBytesMessage, nonce);
+            // ReSharper disable once ConvertIfStatementToReturnStatement
             if (!isVerified)
             {
                 throw new EncryptedNoteException("Can't decrypt the note");
             }
 
-            var decrypted = Encoding.UTF8.GetString(plain);
-            return decrypted;
+            return plain;
         }
     }
 }

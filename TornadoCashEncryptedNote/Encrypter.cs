@@ -76,6 +76,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote
             var fullNoteBytes = Encoding.UTF8.GetBytes(rawNote);
             var cipher = new byte[fullNoteBytes.Length + XSalsa20Poly1305.TagLength];
             ephemBoxPair.Encrypt(cipher, fullNoteBytes, nonce);
+            CryptographicOperations.ZeroMemory(ephemSecretKey);
 
             // Verify encrypted note
             using var userBoxPair = new Curve25519XSalsa20Poly1305(privateKey, ephemPublicKey);
