@@ -37,6 +37,11 @@ namespace NokitaKaze.TornadoCashEncryptedNote
 
         public static string DecryptNote(byte[] encryptedNoteBytes, byte[] privateKeyBytes)
         {
+            if (privateKeyBytes.Length != XSalsa20Poly1305.KeyLength)
+            {
+                throw new EncryptedNoteException("Malformed note private key");
+            }
+
             if (encryptedNoteBytes.Length <=
                 XSalsa20Poly1305.NonceLength + XSalsa20Poly1305.KeyLength + XSalsa20Poly1305.TagLength)
             {

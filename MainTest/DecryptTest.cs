@@ -155,6 +155,18 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
         }
 
         [Theory]
+        [InlineData(0)]
+        [InlineData(31)]
+        [InlineData(33)]
+        public void DecryptNoteWithMalformedPrivateKeyTest(int privateKeyLength)
+        {
+            var exception = Assert.Throws<EncryptedNoteException>(() =>
+                Decrypter.DecryptNote(new byte[0], new byte[privateKeyLength])
+            );
+            Assert.Equal("Malformed note private key", exception.Message);
+        }
+
+        [Theory]
         [MemberData(nameof(DecryptNoteTestData))]
         public void DecryptShortNoteTest(
             string encryptedNote,

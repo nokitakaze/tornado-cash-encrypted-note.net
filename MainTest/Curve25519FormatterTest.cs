@@ -44,5 +44,23 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
                 }
             }
         }
+
+        [Fact]
+        public void WrongKeyLength()
+        {
+            using var rng = RandomNumberGenerator.Create();
+
+            for (var i = 1; i < 64; i++)
+            {
+                if (i == XSalsa20Poly1305.KeyLength)
+                {
+                    continue;
+                }
+
+                var b = new byte[i];
+                rng.GetBytes(b);
+                Assert.Throws<EncryptedNoteException>(() => Curve25519Formatter.FormatPrivateKey(b));
+            }
+        }
     }
 }

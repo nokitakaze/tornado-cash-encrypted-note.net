@@ -30,7 +30,7 @@ Examples:
 
 ### Encrypted note events
 Event type 0xfa28df43db3553771f7209dcef046f3bdfea15870ab625dcda30ac58b82b4008
-- [Ethereum](https://etherscan.io/address/0x722122df12d4e14e13ac3b6895a86e84145b6967#events)
+- [Ethereum](https://etherscan.io/address/0xd90e2f925DA726b50C4Ed8D0Fb90Ad053324F31b#events) / [Ethereum Old](https://etherscan.io/address/0x722122df12d4e14e13ac3b6895a86e84145b6967#events)
 - [Görli](https://goerli.etherscan.io/address/0x454d870a72e29d5e5697f635128d18077bd04c60#events)
 - [Binance Smart Chain](https://bscscan.com/address/0x0d5550d52428e7e3175bfc9550207e4ad3859b17#events)
 

@@ -11,7 +11,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote
     /// <summary>
     /// A user can, for example, generate 32 uniform random bytes, clear bits 0, 1, 2 of the first byte,
     /// clear bit 7 of the last byte, and set bit 6 of the last byte.
-    /// 
+    ///
     /// The non-canonical values are 2^255 - 19 through 2^255 - 1 for X25519.
     /// When receiving such an array, implementations of X25519 (but not X448) MUST mask the most significant bit
     /// in the final byte. This is done to preserve compatibility with point formats that reserve the sign bit
@@ -63,6 +63,11 @@ namespace NokitaKaze.TornadoCashEncryptedNote
         // ReSharper disable once ParameterTypeCanBeEnumerable.Global
         public static byte[] FormatPrivateKey(byte[] bytes)
         {
+            if (bytes.Length != XSalsa20Poly1305.KeyLength)
+            {
+                throw new EncryptedNoteException("Malformed note private key");
+            }
+
             var bytesNew = bytes.ToArray();
             bytesNew[0] &= 0b1111_1000; // 0xf8
             bytesNew[31] &= 0b0111_1111; // 0x7f
