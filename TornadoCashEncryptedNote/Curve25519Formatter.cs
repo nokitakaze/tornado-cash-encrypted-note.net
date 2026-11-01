@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using NaCl;
 
 namespace NokitaKaze.TornadoCashEncryptedNote
@@ -74,15 +75,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote
 
         public static bool ArePrivateKeysSame(byte[] key1, byte[] key2)
         {
-            for (var i = 0; i < Curve25519.ScalarLength; i++)
-            {
-                if (key1[i] != key2[i])
-                {
-                    return false;
-                }
-            }
-
-            return true;
+            return CryptographicOperations.FixedTimeEquals(key1, key2);
         }
 
         public static bool ArePrivateKeysEqual(byte[] key1, byte[] key2)
