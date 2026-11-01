@@ -3,14 +3,11 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Text;
 using NaCl;
-using Nethereum.Util;
 
 namespace NokitaKaze.TornadoCashEncryptedNote
 {
     public static class Encrypter
     {
-        private static readonly AddressUtil AddressUtil = new AddressUtil();
-
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static byte[] ParseHex(string hex)
         {
@@ -19,17 +16,11 @@ namespace NokitaKaze.TornadoCashEncryptedNote
 
         public static string CreateRawNoteFrom(string contractAddress, string commitmentSecret)
         {
-            contractAddress = AddressUtil.ConvertToChecksumAddress(contractAddress.ToLowerInvariant());
+            contractAddress = EthereumAddressFormatter.Format(contractAddress);
             commitmentSecret = commitmentSecret.ToLowerInvariant();
             if (!commitmentSecret.StartsWith("0x"))
             {
                 commitmentSecret = "0x" + commitmentSecret;
-            }
-
-            var contractAddressBytes = ParseHex(contractAddress);
-            if (contractAddressBytes.Length != 20)
-            {
-                throw new EncryptedNoteException("Contract address malformed");
             }
 
             var commitmentSecretBytes = ParseHex(commitmentSecret);
