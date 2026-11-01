@@ -10,6 +10,7 @@
         <PackageTags>ethereum tornadocash</PackageTags>
         <AssemblyName>NokitaKaze.TornadoCashEncryptedNote</AssemblyName>
         <RootNamespace>NokitaKaze.TornadoCashEncryptedNote</RootNamespace>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     </PropertyGroup>
 
     <ItemGroup>
