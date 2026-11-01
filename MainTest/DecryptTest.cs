@@ -145,7 +145,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
                     try
                     {
                         Decrypter.DecryptNote(encryptedNote, privateKeyBytes1);
-                        Assert.True(false, "Decryption didn't raise exception with wrong password");
+                        Assert.Fail("Decryption didn't raise exception with wrong password");
                     }
                     catch (EncryptedNoteException)
                     {
@@ -185,7 +185,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
                 try
                 {
                     Decrypter.DecryptNote(s, privateKey);
-                    Assert.True(false, "Decryption didn't raise exception with short malformed note");
+                    Assert.Fail("Decryption didn't raise exception with short malformed note");
                 }
                 catch (EncryptedNoteException)
                 {

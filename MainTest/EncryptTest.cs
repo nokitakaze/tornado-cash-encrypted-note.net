@@ -161,7 +161,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
                 try
                 {
                     Encrypter.EncryptNote(DefaultPlainNote, bytesShort);
-                    Assert.True(false, "Encrypted didn't raise exception with short note' private key");
+                    Assert.Fail("Encrypted didn't raise exception with short note' private key");
                 }
                 catch (EncryptedNoteException)
                 {
@@ -170,7 +170,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
                 try
                 {
                     Encrypter.EncryptNote(DefaultPlainNote, shortKeyS);
-                    Assert.True(false, "Encrypted didn't raise exception with short note' private key");
+                    Assert.Fail("Encrypted didn't raise exception with short note' private key");
                 }
                 catch (EncryptedNoteException)
                 {
@@ -185,7 +185,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
             {
                 Encrypter.CreateRawNoteFrom("0x6Bf694a291DF3FeC1f7e69701E3ab6c592435A",
                     "0x0e2d09c3b49548799444ae871c1ad7e6dd6110f80e6db8f8e544c33c45234f56caae9b5b4d4d24e1ffbc92b3f94a2228efa28efb363ed96275983a9c64a3");
-                Assert.True(false, "Encrypted didn't raise exception with malformed contract address");
+                Assert.Fail("Encrypted didn't raise exception with malformed contract address");
             }
             catch (EncryptedNoteException)
             {
@@ -199,7 +199,7 @@ namespace NokitaKaze.TornadoCashEncryptedNote.MainTest
             {
                 Encrypter.CreateRawNoteFrom("0x6Bf694a291DF3FeC1f7e69701E3ab6c592435Ae7",
                     "0x0e2d09c3b49548799444ae871c1ad7e6dd6110f80e6db8f8e544c33c45234f56caae9b5b4d4d24e1ffbc92b3f94a2228efa28efb363ed96275983a9c64");
-                Assert.True(false, "Encrypted didn't raise exception with malformed private commitment");
+                Assert.Fail("Encrypted didn't raise exception with malformed private commitment");
             }
             catch (EncryptedNoteException)
             {
