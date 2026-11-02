@@ -4,7 +4,7 @@ Tornado Cash Encrypted Note.Net: Cypher/Decypher
 [![codecov](https://codecov.io/gh/nokitakaze/tornado-cash-encrypted-note.net/branch/master/graph/badge.svg)](https://codecov.io/gh/nokitakaze/tornado-cash-encrypted-note.net)
 [![Total nuget downloads](https://badgen.net/nuget/dt/NokitaKaze.TornadoCashEncryptedNote)](https://www.nuget.org/packages/NokitaKaze.TornadoCashEncryptedNote)
 
-This project is a C# implementation of [Tornado Cash](https://docs.tornado.cash/general/how-does-tornado.cash-work)'s encrypted notes.
+This project is a C# implementation of [Tornado Cash](https://github.com/tornadocash-community/docs/blob/en/general/how-does-tornado.cash-work.md)'s encrypted notes.
 
 ### More about Tornado Cash
 - https://mirror.xyz/decent-dao.eth/zb1mwO0wjwv74AQvNNMvGEUFRBt7cVqyoIDrhvrwt0k
